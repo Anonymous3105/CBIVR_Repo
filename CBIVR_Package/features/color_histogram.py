@@ -88,3 +88,5 @@ def get_rgb_histogram_features(image, channels=(0, 1, 2), mask=None, hist_size=(
 	hist = cv2.normalize(hist, dst=np.array([])).flatten()
 
 	return hist
+
+
