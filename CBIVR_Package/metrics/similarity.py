@@ -2,7 +2,6 @@ try:
 	import numpy as np
 except ImportError as error:
 	print(error.__class__.__name__ + ": " + error.message)
-	raise ImportError("Python module Numpy not installed")
 
 
 def get_cosine_similarity(d1, d2):
@@ -31,3 +30,15 @@ def get_pearson_correlation_coefficient(d1, d2):
 		# Output unexpected Exceptions.
 		print(exception, False)
 		print(exception.__class__.__name__ + ": " + exception.message)
+
+
+def hist_intersection(image1, image2):
+	"""
+	Function for calculating histogram intersection between two image
+	A, B:
+		numpy ndarray for image
+	"""
+	min_matrix = np.where(image1 >= image2, image2, 0) + np.where(image1 < image2, image1, 0)
+	the_min = min_matrix / float(min(np.sum(image1.ravel()), np.sum(image2.ravel())))
+
+	return sum(the_min.ravel())
