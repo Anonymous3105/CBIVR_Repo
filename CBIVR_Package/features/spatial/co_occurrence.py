@@ -6,7 +6,7 @@ except ImportError as error:
 	print(error.__class__.__name__ + ": " + error.message)
 
 
-def get_GLCM_features(image, distances=[0], angles=None, levels=256, symmetric=True, normed=True, features=None):
+def get_GLCM_features(image, distances=(0), angles=None, levels=256, symmetric=True, normed=True, features=None):
 	"""
 	Function to return features extracted from the gray level co-occurrence matrix of an image
 	:param image: OpenCV numpy array_like of uint8
@@ -43,7 +43,6 @@ def get_GLCM_features(image, distances=[0], angles=None, levels=256, symmetric=T
 		for f in features:
 			if f not in accepted_features:
 				raise Exception("Feature " + f + "is not accepted in the set of features")
-				return None
 
 	image_glcm = texture.greycomatrix(image, distances, angles, levels=levels, symmetric=symmetric, normed=normed)
 
