@@ -1,7 +1,7 @@
 try:
 	import numpy as np
 	import cv2
-	from matplotlib import pyplot as plt
+	from CBIVR_Package.miscellaneous.image_operations import get_neighbors, quantize_image
 except ImportError as error:
 	print(error.__class__.__name__ + ": " + error.message)
 
@@ -17,10 +17,7 @@ def get_correlogram(image, colours, K):
 	for k in K:
 
 		countColor = 0
-		color = []
-
-		for i in colours:
-			color.append(0)
+		color = [0 for i in range(len(colours))]
 
 		for x in range(0, X, int(round(X / 10))):
 			for y in range(0, Y, int(round(Y / 10))):

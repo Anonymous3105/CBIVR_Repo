@@ -77,7 +77,6 @@ def plot_rgb_histogram(image, mask, hist_size=256, ranges=(0, 256)):
 
 def plot_2d_rgb_color_histograms(image, mask=None, hist_size=(8, 8, 8), ranges=(0, 256, 0, 256, 0 ,256)):
 	"""
-
 	:param image: OpenCV BGR Image
 		Source image to be operated upon
 	:param mask: mask image. default as None to compute histogram of full image.
