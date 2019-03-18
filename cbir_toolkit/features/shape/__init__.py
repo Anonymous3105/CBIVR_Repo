@@ -1,0 +1,1 @@
+from cbir_toolkit.features.shape import *
