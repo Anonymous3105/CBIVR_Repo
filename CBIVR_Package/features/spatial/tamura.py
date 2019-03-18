@@ -88,7 +88,6 @@ def get_directionality(image, threshold=12):
 	deltas = 0.5 * (np.abs(img_prewittx) + np.abs(img_prewitty))
 	angles = np.arctan(img_prewitty / img_prewittx) + (np.pi / 2)
 
-	n_bins = 9
 	bin_angles = np.array(range(0, 180, 20)) * np.pi / 180
 	dir_vector = np.zeros(9)
 
@@ -130,4 +129,3 @@ def get_linelikeness(image):
 	line_likeness /= np.sum(comat)
 
 	return line_likeness
-
