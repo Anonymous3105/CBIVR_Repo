@@ -76,7 +76,7 @@ def get_contrast(image, mask=None, n=0.25):
 
 def get_directionality(image, threshold=12):
 
-	# TODO: Find the actual threshold to eleiminate value of 12
+	# TODO: Find the actual threshold to eliminate value of 12
 	H, W = image.shape[:2]
 
 	kernelx = np.array([[1, 1, 1], [0, 0, 0], [-1, -1, -1]])
