@@ -59,7 +59,7 @@ def get_neighbors(X, Y, x, y, dist):
 	Cn = []
 
 	for i in points:
-		if isValid(X, Y, i):
-			Cn.append(i)
+		# if isValid(X, Y, i):
+		Cn.append(i)
 
 	return Cn
