@@ -1,11 +1,6 @@
-try:
-	import numpy as np
-	import cv2
-	from matplotlib import pyplot as plt
-except ImportError as error:
-	print(error.__class__.__name__ + ": " + error.message)
-	raise ImportError("Python module Numpy not installed")
-
+import numpy as np
+import cv2
+from matplotlib import pyplot as plt
 
 def plot_rgb_colour_channels(image, boundaries=None):
 	"""

@@ -1,9 +1,6 @@
-try:
-	import numpy as np
-	import cv2
-	from cbir_toolkit.miscellaneous.image_operations import get_neighbors, quantize_image
-except ImportError as error:
-	print(error.__class__.__name__ + ": " + error.message)
+import numpy as np
+import cv2
+from cbir_toolkit.miscellaneous.image_operations import get_neighbors, quantize_image
 
 
 def get_correlogram(image, colours, K):

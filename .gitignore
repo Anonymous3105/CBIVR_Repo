@@ -1,4 +1,5 @@
-.idea/*
+.idea
+.vscode
 
 # Compiled python modules.
 *.pyc

@@ -1,8 +1,4 @@
-try:
-	import numpy as np
-except ImportError as error:
-	print(error.__class__.__name__ + ": " + error.message)
-
+import numpy as np
 
 def get_cosine_similarity(d1, d2):
 	"""
@@ -15,7 +11,7 @@ def get_cosine_similarity(d1, d2):
 	except Exception as exception:
 		# Output unexpected Exceptions.
 		print(exception, False)
-		print(exception.__class__.__name__ + ": " + exception.message)
+		print(exception.__class__.__name__ + ": " + exception)
 
 
 def get_pearson_correlation_coefficient(d1, d2):
@@ -29,7 +25,7 @@ def get_pearson_correlation_coefficient(d1, d2):
 	except Exception as exception:
 		# Output unexpected Exceptions.
 		print(exception, False)
-		print(exception.__class__.__name__ + ": " + exception.message)
+		print(exception.__class__.__name__ + ": " + exception)
 
 
 def hist_intersection(image1, image2):

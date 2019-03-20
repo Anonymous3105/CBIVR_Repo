@@ -1,10 +1,6 @@
-try:
-	import numpy as np
-	import cv2
-	from matplotlib import pyplot as plt
-except ImportError as error:
-	print(error.__class__.__name__ + ": " + error.message)
-
+import numpy as np
+import cv2
+from matplotlib import pyplot as plt
 
 def quantize_image(img, n_colours=64):
 	Z = img.reshape((-1, 3))

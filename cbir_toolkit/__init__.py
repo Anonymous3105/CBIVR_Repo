@@ -1,3 +1,3 @@
-from cbir_toolkit.features import *
-from cbir_toolkit.metrics import *
-from cbir_toolkit.miscellaneous import *
+from .features import *
+from .metrics import *
+from .miscellaneous import *

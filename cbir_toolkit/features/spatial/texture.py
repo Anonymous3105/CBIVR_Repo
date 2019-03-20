@@ -1,11 +1,7 @@
-try:
-	import numpy as np
-	import cv2
-	from skimage.feature import texture
-	import mahotas.texture as tex
-except ImportError as error:
-	print(error.__class__.__name__ + ": " + error.message)
-
+import numpy as np
+import cv2
+from skimage.feature import texture
+import mahotas.texture as tex
 
 _2d_deltas = [
 	(0, 1),

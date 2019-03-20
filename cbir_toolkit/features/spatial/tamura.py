@@ -1,11 +1,7 @@
-try:
-	import numpy as np
-	import cv2
-	from skimage.texture import greycomatrix
-	from scipy.stats import moment
-except ImportError as error:
-	print(error.__class__.__name__ + ": " + error.message)
-
+import numpy as np
+import cv2
+from skimage.feature.texture import greycomatrix
+from scipy.stats import moment
 
 def get_tamura_features(image):
 

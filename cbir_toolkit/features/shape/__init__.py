@@ -1,1 +1,1 @@
-from cbir_toolkit.features.shape import *
+from .fourier import *
