@@ -1,6 +1,7 @@
 import numpy as np
 import cv2
 
+
 def get_fourier_descriptors(image):
 	""" Function to find and return the	Fourier-Descriptor of the image contour
 	:param image: OpenCV uint8 or float32 array_like

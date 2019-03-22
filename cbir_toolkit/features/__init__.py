@@ -1,3 +1,3 @@
 from .color import *
-from .shape import *
+from .wavelet import *
 from .spatial import *

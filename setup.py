@@ -11,6 +11,7 @@ setup(
         'matplotlib',
         'scikit-image',
         'scipy',
-        'mahotas'
+        'mahotas',
+        'Pywavelets'
     ]
 )

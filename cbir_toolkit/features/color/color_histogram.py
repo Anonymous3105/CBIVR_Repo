@@ -104,7 +104,7 @@ def plot_2d_rgb_color_histograms(image, mask=None, hist_size=(8, 8, 8), ranges=(
 	ax.set_title("2D Color Histogram for Blue and Red")
 	plt.colorbar(p)
 
-	print("2D histogram shape: %s, with %d values" % (hist.shape, hist.flatten().shape[0]))
+	print("2D histogram wavelet: %s, with %d values" % (hist.shape, hist.flatten().shape[0]))
 	plt.show()
 
 
