@@ -1,6 +1,5 @@
 import cv2
 import numpy as np
-from matplotlib import pyplot as plt
 from pywt import wavedec2
 from scipy.special import entr
 
