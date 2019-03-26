@@ -38,3 +38,18 @@ def hist_intersection(image1, image2):
 	the_min = min_matrix / float(min(np.sum(image1.ravel()), np.sum(image2.ravel())))
 
 	return sum(the_min.ravel())
+
+
+def jaccard_similarity(vec1, vec2):
+	"""
+	Function to compute the Jaccard similarity between two boolean vectors
+	:param vec1: numpy ndarray_like
+	:param vec2: numpy ndarray_like
+	"""
+
+	if vec1.shape != vec2.shape:
+		raise ValueError("Shape mismatch: vec1 and vec2 must have the same shape.")
+
+	intersection = np.logical_and(vec1, vec2)
+	union = np.logical_or(vec1, vec2)
+	return intersection.sum() / float(union.sum())

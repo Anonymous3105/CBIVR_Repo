@@ -199,7 +199,7 @@ def get_distance(vec1, vec2, method="euclidean", p=2):
 	"""
 
 	if method not in metric_mapper.keys():
-		print("The given method: '{}' is not allowed".format(method))
+		raise KeyError("Method not found in the list of defined errors")
 	else:
 		distance_function = metric_mapper[method]
 		if method in ["minkowski", "wasserstein"]:
