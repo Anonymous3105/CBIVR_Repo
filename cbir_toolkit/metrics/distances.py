@@ -1,5 +1,6 @@
 import numpy as np
 
+
 def get_sum_absolute_difference(d1, d2):
 	"""
 		Function to find the sum of absolute differences between 2 vectors
@@ -103,7 +104,7 @@ def get_minkowski_distance(d1, d2, p=2):
 		print(exception.__class__.__name__ + ": " + exception)
 
 
-def get_chi_squared_distance(d1, d2):
+def get_chi_square_distance(d1, d2):
 	"""
 		Function to find the Chi-squared distance between 2 vectors
 			Parameters:
@@ -167,3 +168,41 @@ def get_wasserstein_distance(u_values, v_values, p=2):
 		# Output unexpected Exceptions.
 		print(exception, False)
 		print(exception.__class__.__name__ + ": " + exception)
+
+
+metric_mapper = {
+		"euclidean": get_euclidean_distance,
+		"city-block": get_city_block_distance,
+		"canberra": get_canberra_distance,
+		"maximum-value-distance": get_maximum_value_distance,
+	    "minkowski": get_minkowski_distance,
+	    "chi-square": get_chi_square_distance,
+	    "hamming": get_hamming_distance,
+	    "wasserstein": get_wasserstein_distance
+}
+
+
+def get_distance(vec1, vec2, method="euclidean", p=2):
+	"""
+	Wrapper funtion to get the distance between two vectors using the given method
+	:param vec1: ndarray_like
+		First vector in the computation
+	:param vec2: ndarray_like
+	:param method: string (Default: euclidean)
+		Distance metric function to invoke.
+		Can be any one of "euclidean", "city-block", "canberra", "maximum-value-distance",
+						"minkowski", "chi-square", "hamming", "wasserstein"
+	:param p: int, optional
+		parameter required in mikowski and wasserstein distance computation
+	:return: float
+		The distance between the 2 vectors
+	"""
+
+	if method not in metric_mapper.keys():
+		print("The given method: '{}' is not allowed".format(method))
+	else:
+		distance_function = metric_mapper[method]
+		if method in ["minkowski", "wasserstein"]:
+			return distance_function(vec1, vec2, p)
+		else:
+			return distance_function(vec1, vec2)
