@@ -13,7 +13,7 @@ def get_sum_absolute_difference(d1, d2):
 	except Exception as exception:
 		# Output unexpected Exceptions.
 		print(exception, False)
-		print(exception.__class__.__name__ + ": " + exception)
+		print(exception.__class__.__name__ + ": " + str(exception))
 
 
 def get_sum_absolute_square_difference(d1, d2):
@@ -27,7 +27,7 @@ def get_sum_absolute_square_difference(d1, d2):
 	except Exception as exception:
 		# Output unexpected Exceptions.
 		print(exception, False)
-		print(exception.__class__.__name__ + ": " + exception)
+		print(exception.__class__.__name__ + ": " + str(exception))
 
 
 def get_euclidean_distance(d1, d2):
@@ -41,7 +41,7 @@ def get_euclidean_distance(d1, d2):
 	except Exception as exception:
 		# Output unexpected Exceptions.
 		print(exception, False)
-		print(exception.__class__.__name__ + ": " + exception)
+		print(exception.__class__.__name__ + ": " + str(exception))
 
 
 def get_city_block_distance(d1, d2):
@@ -55,7 +55,7 @@ def get_city_block_distance(d1, d2):
 	except Exception as exception:
 		# Output unexpected Exceptions.
 		print(exception, False)
-		print(exception.__class__.__name__ + ": " + exception)
+		print(exception.__class__.__name__ + ": " + str(exception))
 
 
 def get_canberra_distance(d1, d2):
@@ -69,7 +69,7 @@ def get_canberra_distance(d1, d2):
 	except Exception as exception:
 		# Output unexpected Exceptions.
 		print(exception, False)
-		print(exception.__class__.__name__ + ": " + exception)
+		print(exception.__class__.__name__ + ": " + str(exception))
 
 
 def get_maximum_value_distance(d1, d2):
@@ -84,7 +84,7 @@ def get_maximum_value_distance(d1, d2):
 	except Exception as exception:
 		# Output unexpected Exceptions.
 		print(exception, False)
-		print(exception.__class__.__name__ + ": " + exception)
+		print(exception.__class__.__name__ + ": " + str(exception))
 
 
 def get_minkowski_distance(d1, d2, p=2):
@@ -101,7 +101,7 @@ def get_minkowski_distance(d1, d2, p=2):
 	except Exception as exception:
 		# Output unexpected Exceptions.
 		print(exception, False)
-		print(exception.__class__.__name__ + ": " + exception)
+		print(exception.__class__.__name__ + ": " + str(exception))
 
 
 def get_chi_square_distance(d1, d2):
@@ -117,7 +117,7 @@ def get_chi_square_distance(d1, d2):
 	except Exception as exception:
 		# Output unexpected Exceptions.
 		print(exception, False)
-		print(exception.__class__.__name__ + ": " + exception)
+		print(exception.__class__.__name__ + ": " + str(exception))
 
 
 def get_hamming_distance(d1, d2):
@@ -131,7 +131,7 @@ def get_hamming_distance(d1, d2):
 	except Exception as exception:
 		# Output unexpected Exceptions.
 		print(exception, False)
-		print(exception.__class__.__name__ + ": " + exception)
+		print(exception.__class__.__name__ + ": " + str(exception))
 
 
 def get_wasserstein_distance(u_values, v_values, p=2):
@@ -167,7 +167,7 @@ def get_wasserstein_distance(u_values, v_values, p=2):
 	except Exception as exception:
 		# Output unexpected Exceptions.
 		print(exception, False)
-		print(exception.__class__.__name__ + ": " + exception)
+		print(exception.__class__.__name__ + ": " + str(exception))
 
 
 distance_metric_mapper = {

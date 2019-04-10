@@ -84,7 +84,8 @@ class Ranker:
 	def rank(self, query_feature_vector):
 		computed_values = {}
 
-		for image, image_feature_vector in self.index:
+		for image in self.index:
+			image_feature_vector = self.index[image]
 			computed_values[image] = self.metric_category_function(image_feature_vector, query_feature_vector, self.metric, self.addn_params)
 
 		desc_flag = True if self.ranking_order == "desc" else False
@@ -93,4 +94,4 @@ class Ranker:
 		if self.num_of_result and self.num_of_result <= len(sorted_images):
 			sorted_images = sorted_images[:self.num_of_result]
 
-		return [sorted_images, [computed_values[image] for image in sorted_images]]
+		return sorted_images, [computed_values[image] for image in sorted_images]

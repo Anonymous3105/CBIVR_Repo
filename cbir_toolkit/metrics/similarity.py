@@ -12,7 +12,7 @@ def get_cosine_similarity(d1, d2):
 	except Exception as exception:
 		# Output unexpected Exceptions.
 		print(exception, False)
-		print(exception.__class__.__name__ + ": " + exception)
+		print(exception.__class__.__name__ + ": " + str(exception))
 
 
 def get_pearson_correlation_coefficient(d1, d2):
@@ -26,7 +26,7 @@ def get_pearson_correlation_coefficient(d1, d2):
 	except Exception as exception:
 		# Output unexpected Exceptions.
 		print(exception, False)
-		print(exception.__class__.__name__ + ": " + exception)
+		print(exception.__class__.__name__ + ": " + str(exception))
 
 
 def hist_intersection(image1, image2):

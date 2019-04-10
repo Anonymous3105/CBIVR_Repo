@@ -41,4 +41,4 @@ def get_BGR_DWT_features(image, wavelet='db1'):
 		An, (cHn, cVn, cDn) = get_lastlevel_DWT(image_ch, wavelet)
 		bgr_features.extend(extract_features([An, cHn, cVn, cDn]))
 
-	return bgr_features
+	return np.array(bgr_features)
