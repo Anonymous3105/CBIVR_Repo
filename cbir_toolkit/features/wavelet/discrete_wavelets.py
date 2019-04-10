@@ -5,7 +5,7 @@ from scipy.special import entr
 
 
 def get_lastlevel_DWT(image, wavelet, lev=3):
-	return cv2.wavedec2(image, wavelet, level=lev)[:2]
+	return wavedec2(image, wavelet, level=lev)[:2]
 
 
 def extract_features(arr):
