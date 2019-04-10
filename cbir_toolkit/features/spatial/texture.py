@@ -125,7 +125,7 @@ def get_haralick_features(image, ignore_zeros=False, get_14th_feature=False, dis
 	"""
 
 	return mfeats.haralick(image,
-            ignore_zeros=ignore_zeros,
-            compute_14th_feature=get_14th_feature,
-            distance=distance
-		)
+							ignore_zeros=ignore_zeros,
+							compute_14th_feature=get_14th_feature,
+							distance=distance
+	)

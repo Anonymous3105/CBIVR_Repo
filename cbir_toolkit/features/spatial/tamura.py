@@ -4,24 +4,32 @@ from skimage.feature.texture import greycomatrix
 from scipy.stats import moment
 
 def get_tamura_features(image):
+	"""
+	Function to get Tamura features of an image
+	:param image: OpenCV grayscale image ndarray like
+	:return: Returns a dictionary of features (coarseness, contrast, directionality)
 
+	Note: Line-Likeness features has not been returned as the feature is still under development
+			and can cause issues if left unhandled.
+	"""
 	features = dict()
 
 	features["coarseness"] = get_coarseness_tamura(image)
 	features["contrast"] = get_contrast(image)
 	features["directionality"] = get_directionality(image)
-	features["linelikeness"] = get_linelikeness(image)
+	# features["linelikeness"] = get_linelikeness(image)
 
 	return features
 
 
 def get_coarseness_tamura(image):
 
-	assert image.shape[0] > 64 or image.shape[1] >= 64, "Image dimensions should be minimum 64X64"
+	assert image.shape[0] > 64 and image.shape[1] >= 64, "Image dimensions should be minimum 64X64"
 
+	image = cv2.resize(image, (1024,1024))
 	H, W = image.shape[:2]
 	Ei = []
-	SBest = np.zeros(H, W)
+	SBest = np.zeros((H, W))
 
 	for k in range(1, 7):
 		Ai = np.zeros((H, W))
@@ -35,8 +43,11 @@ def get_coarseness_tamura(image):
 
 		for h in range(2**(k-1)+1, H-k):
 			for w in range(2 ** (k - 1) + 1, W-k):
-				Ei_h[h, w] = Ai[h+(2**(k-1)-1), w] - Ai[h-(2**(k-1)-1), w]
-				Ei_v[h, w] = Ai[h, w+(2**(k-1)-1)] - Ai[h, w-(2**(k-1)-1)]
+				try:
+					Ei_h[h, w] = Ai[h+(2**(k-1)-1), w] - Ai[h-(2**(k-1)-1), w]
+					Ei_v[h, w] = Ai[h, w+(2**(k-1)-1)] - Ai[h, w-(2**(k-1)-1)]
+				except IndexError:
+					pass
 
 		Ei_h /= 2 ** (2 * k)
 		Ei_v /= 2 ** (2 * k)
@@ -54,10 +65,11 @@ def get_coarseness_tamura(image):
 	coarseness = np.sum(SBest) / (H * W)
 	return coarseness
 
+
 def get_contrast(image, mask=None, n=0.25):
 
 	H, W = image.shape[:2]
-	hist = cv2.calcHist(image, [0], mask, 256, [0,256])
+	hist = cv2.calcHist(image, [0], mask, [256], [0,256])
 	levels = 256
 
 	count_probs = hist / (H * W)
@@ -82,7 +94,11 @@ def get_directionality(image, threshold=12):
 	img_prewitty = cv2.filter2D(image, -1, kernely)
 
 	deltas = 0.5 * (np.abs(img_prewittx) + np.abs(img_prewitty))
-	angles = np.arctan(img_prewitty / img_prewittx) + (np.pi / 2)
+	try:
+		angles = np.arctan(img_prewitty / img_prewittx) + (np.pi / 2)
+	except ZeroDivisionError:
+		pass
+	np.nan_to_num(angles)
 
 	bin_angles = np.array(range(0, 180, 20)) * np.pi / 180
 	dir_vector = np.zeros(9)
