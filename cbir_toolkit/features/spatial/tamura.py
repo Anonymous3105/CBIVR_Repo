@@ -131,7 +131,7 @@ def get_linelikeness(image):
 
 	digitized_angles = np.digitize(angles, bin_angles)
 
-	comat = greycomatrix(digitized_angles, [1], [0, np.pi/2], levels=4)
+	comat = greycomatrix(digitized_angles, [1], [0, np.pi/2], levels=256)
 
 	line_likeness = 0
 	for i in range(n_bins):
