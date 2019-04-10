@@ -7,35 +7,37 @@ def plot_rgb_colour_channels(image, boundaries=None):
 	Function to detect and plot different colour channels in an image
 	:param image: OpenCV BGR image
 		Source image to be operated upon
-	:param boundaries:
-		Boundaries for each colour channel.
-		Default as  [
-						([17, 15, 100], [50, 56, 200]),
-						([86, 31, 4], [220, 88, 50]),
-						([25, 146, 190], [62, 174, 250]),
-						([103, 86, 65], [145, 133, 128])
-					]
 	:return: no return
 	"""
 
-	if boundaries is None:
-		boundaries = [
-			([17, 15, 100], [50, 56, 200]),
-			([86, 31, 4], [220, 88, 50]),
-			([25, 146, 190], [62, 174, 250]),
-			([103, 86, 65], [145, 133, 128])
-		]
+	image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+	w, h = image.shape[:2]
 
-	for (lower, upper) in boundaries:
-		# create NumPy arrays from the boundaries
-		lower = np.array(lower, dtype="uint8")
-		upper = np.array(upper, dtype="uint8")
+	plt.subplot("221")
+	plt.imshow(image)
+	plt.title("Input Image")
+	plt.show()
 
-		# find the colors within the specified boundaries and apply
-		# the mask
-		mask = cv2.inRange(image, lower, upper)
-		output = cv2.bitwise_and(image, image, mask=mask)
+	image_r = image.copy()
+	image_r[:, :, 1] = 0
+	image_r[:, :, 2] = 0
+	plt.subplot("222")
+	plt.title("Red channel of Image")
+	plt.imshow(image_r)
 
-		# show the images
-		cv2.imshow("images", np.hstack([image, output]))
-		cv2.waitKey(0)
+	image_g = image.copy()
+	image_g[:, :, 0] = 0
+	image_g[:, :, 2] = 0
+	plt.subplot("223")
+	plt.title("Green channel of Image")
+	plt.imshow(image_g)
+
+	image_b = image.copy()
+	image_b[:, :, 0] = 0
+	image_b[:, :, 1] = 0
+	plt.subplot("224")
+	plt.title("Blue channel of Image")
+	plt.imshow(image_b)
+
+	plt.show()
+
