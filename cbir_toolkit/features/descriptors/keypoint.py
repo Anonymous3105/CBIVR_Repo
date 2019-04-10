@@ -105,9 +105,12 @@ def get_ORB_features(image, num_features=500, scaleFactor=1.2, nlevels=8, score_
 		:return: matrix_like (and OpenCV image ndarray_like)
 			Returns descriptors along with an image with kepypoints drawn depending on the boolean value of plot_and_return_keypoints
 		"""
-	surf = cv2.ORB_create(num_features, scaleFactor, scoreType=score_type)
+	if score_type == None:
+		orb = cv2.ORB_create(num_features, scaleFactor, scoreType=cv2.ORB_HARRIS_SCORE)
+	else:
+		orb = cv2.ORB_create(num_features, scaleFactor, scoreType=score_type)
 	image = cv2.resize(image, image_size, interpolation=cv2.INTER_AREA)
-	keypoints, descriptors = surf.detectAndCompute(image, None)
+	keypoints, descriptors = orb.detectAndCompute(image, None)
 
 	if plot_and_return_keypoints:
 		keypoint_image = cv2.drawKeypoints(image, keypoints, None)
