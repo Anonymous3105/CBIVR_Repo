@@ -1,29 +1,8 @@
 import numpy as np
+from skimage.feature import texture as sktex
 import cv2
-from skimage.feature import texture
-import mahotas.texture as tex
-
-_2d_deltas = [
-	(0, 1),
-	(1, 1),
-	(1, 0),
-	(1, -1)]
-
-_3d_deltas = [
-	(1, 0, 0),
-	(1, 1, 0),
-	(0, 1, 0),
-	(1, -1, 0),
-	(0, 0, 1),
-	(1, 0, 1),
-	(0, 1, 1),
-	(1, 1, 1),
-	(1, -1, 1),
-	(1, 0, -1),
-	(0, 1, -1),
-	(1, 1, -1),
-	(1, -1, -1)
-]
+import mahotas.features as mfeats
+import mahotas.texture as mtex
 
 
 def get_GLCM_features(image, distances=(0), angles=None, levels=256, symmetric=True, normed=True, features=None):
@@ -64,7 +43,7 @@ def get_GLCM_features(image, distances=(0), angles=None, levels=256, symmetric=T
 			if f not in accepted_features:
 				raise Exception("Feature " + f + "is not accepted in the set of features")
 
-	image_glcm = texture.greycomatrix(image, distances, angles, levels=levels, symmetric=symmetric, normed=normed)
+	image_glcm = sktex.greycomatrix(image, distances, angles, levels=levels, symmetric=symmetric, normed=normed)
 
 	output_features = dict()
 	for feature in features:
@@ -75,18 +54,18 @@ def get_GLCM_features(image, distances=(0), angles=None, levels=256, symmetric=T
 					entropy -= image_glcm[i, j] * np.ma.log(image_glcm[i, j])
 			output_features[feature] = entropy
 		else:
-			output_features[feature] = texture.greycoprops(image_glcm, feature)
+			output_features[feature] = sktex.greycoprops(image_glcm, feature)
 
 	return output_features
 
 
-def get_LBP(image, P, R, method=None):
+def get_LBP(image, points, radius, method=None):
 	"""
 	Function to get Local Binary Pattern of an image based on given parameters
 	:param image: OpenCV array_like of uint8
-	:param P: int
+	:param points: int
 		Number of circularly symmetric neighbour set points (quantization of the angular space).
-	:param R: float
+	:param radius: float
 		Radius of circle (spatial resolution of the operator).
 	:param method: {‘default’, ‘ror’, ‘uniform’, ‘var’}
 		Method to determine the pattern.
@@ -97,9 +76,11 @@ def get_LBP(image, P, R, method=None):
 			‘var’: rotation invariant variance measures of the contrast of local image texture
 				which is rotation but not gray scale invariant.
 	:return: LBP image array_like
-	"""
 
-	return texture.local_binary_pattern(image, P, R, method)
+	Example: get_LBP(image, radius=8, points=6)
+	"""
+	image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+	return mfeats.lbp(image, points, radius, method)
 
 
 def get_cooccurrence_matrix(image, direction, symmetric=False, distance=1):
@@ -125,7 +106,7 @@ def get_cooccurrence_matrix(image, direction, symmetric=False, distance=1):
 	elif len(image.shape) not in (2, 3):
 		raise ValueError('mahotas.texture.cooccurence: cannot handle images of %s dimensions.' % len(image.shape))
 
-	return tex.cooccurence(image, direction, output=None, symmetric=symmetric, distance=distance)
+	return mtex.cooccurence(image, direction, output=None, symmetric=symmetric, distance=distance)
 
 
 def get_haralick_features(image, ignore_zeros=False, get_14th_feature=False, distance=1):
@@ -142,25 +123,9 @@ def get_haralick_features(image, ignore_zeros=False, get_14th_feature=False, dis
 		A 4x13 or 4x14 feature vector (one row per direction) if `f` is 2D, 13x13 or 13x14 if it is 3D.
 		The exact number of features depends on the value of "compute_14th_feature"
 	"""
-	if len(image.shape) == 2:
-		nr_dirs = len(_2d_deltas)
-	elif len(image.shape) == 3:
-		nr_dirs = len(_3d_deltas)
-	else:
-		raise ValueError('mahotas.texture.haralick: Can only handle 2D and 3D images.')
-	fm1 = image.max() + 1
-	cmat = np.empty((fm1, fm1), np.int32)
 
-	def all_cmatrices():
-		for dir in range(nr_dirs):
-			tex.cooccurence(image, dir, cmat, symmetric=True, distance=distance)
-			yield cmat
-
-	return tex.haralick_features(all_cmatrices(),
-								ignore_zeros=ignore_zeros,
-								preserve_haralick_bug=False,
-								compute_14th_feature=get_14th_feature,
-								return_mean=False,
-								return_mean_ptp=False,
-								use_x_minus_y_variance=False,
-								)
+	return mfeats.haralick(image,
+            ignore_zeros=ignore_zeros,
+            compute_14th_feature=get_14th_feature,
+            distance=distance
+		)
