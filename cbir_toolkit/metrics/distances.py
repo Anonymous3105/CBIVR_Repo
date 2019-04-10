@@ -170,19 +170,19 @@ def get_wasserstein_distance(u_values, v_values, p=2):
 		print(exception.__class__.__name__ + ": " + exception)
 
 
-metric_mapper = {
+distance_metric_mapper = {
 		"euclidean": get_euclidean_distance,
 		"city-block": get_city_block_distance,
 		"canberra": get_canberra_distance,
 		"maximum-value-distance": get_maximum_value_distance,
-	    "minkowski": get_minkowski_distance,
-	    "chi-square": get_chi_square_distance,
-	    "hamming": get_hamming_distance,
-	    "wasserstein": get_wasserstein_distance
+		"minkowski": get_minkowski_distance,
+		"chi-square": get_chi_square_distance,
+		"hamming": get_hamming_distance,
+		"wasserstein": get_wasserstein_distance
 }
 
 
-def get_distance(vec1, vec2, method="euclidean", p=2):
+def get_distance(vec1, vec2, method="euclidean", addn_params=None):
 	"""
 	Wrapper funtion to get the distance between two vectors using the given method
 	:param vec1: ndarray_like
@@ -192,17 +192,23 @@ def get_distance(vec1, vec2, method="euclidean", p=2):
 		Distance metric function to invoke.
 		Can be any one of "euclidean", "city-block", "canberra", "maximum-value-distance",
 						"minkowski", "chi-square", "hamming", "wasserstein"
-	:param p: int, optional
-		parameter required in mikowski and wasserstein distance computation
+	:param addn_params: dict like, optional
+		Additional parameters to be used in special cases
 	:return: float
 		The distance between the 2 vectors
 	"""
 
-	if method not in metric_mapper.keys():
-		raise KeyError("Method not found in the list of defined errors")
+	if addn_params is None:
+		addn_params = {'p': 2}
+	if method not in distance_metric_mapper.keys():
+		raise KeyError("Method not found in the list of defined metrics")
 	else:
-		distance_function = metric_mapper[method]
+		distance_function = distance_metric_mapper[method]
 		if method in ["minkowski", "wasserstein"]:
-			return distance_function(vec1, vec2, p)
+			return distance_function(vec1, vec2, addn_params['p'])
 		else:
 			return distance_function(vec1, vec2)
+
+
+def get_metric_choices():
+	return distance_metric_mapper.keys()

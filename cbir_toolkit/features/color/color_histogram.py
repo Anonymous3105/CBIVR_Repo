@@ -2,6 +2,7 @@ import numpy as np
 import cv2
 from matplotlib import pyplot as plt
 
+
 def get_color_histogram(image, channels, mask=None, hist_size=(256), ranges=(0, 256)):
 	"""
 	Function to get the histogram of provided image in the channel required
