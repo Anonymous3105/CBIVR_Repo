@@ -59,7 +59,7 @@ def get_GLCM_features(image, distances=(0), angles=None, levels=256, symmetric=T
 	return output_features
 
 
-def get_LBP(image, points, radius, method=None):
+def get_LBP(image, points, radius, method="default"):
 	"""
 	Function to get Local Binary Pattern of an image based on given parameters
 	:param image: OpenCV array_like of uint8
