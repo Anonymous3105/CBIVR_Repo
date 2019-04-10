@@ -2,8 +2,7 @@ import cv2
 import numpy as np
 
 from glob import glob
-from os import getcwd
-from os.path import isdir
+from os.path import isdir, expanduser
 
 from cbir_toolkit.metrics.distances import get_metric_choices as dis_choices, get_distance
 from cbir_toolkit.metrics.similarity import get_metric_choices as sim_choices, get_similarity
@@ -24,17 +23,25 @@ def get_metric_function(method):
 
 
 def load_images_from_dir(files_dir):
-	if not isdir(getcwd() + files_dir):
+	"""
+	Function to load images from a directory of files
+	:param files_dir: string
+		Relative or absolute path of the image directory
+	:return: dict like
+		Dictionary with image filenames as keys and image OpenCV arrays as values.
+	"""
+
+	if not isdir(expanduser(files_dir)):
 		raise NotADirectoryError("Given directory does not exists.")
 	else:
 		images = {}
-		global_dir_path = getcwd() + "/images/"
+		global_dir_path = expanduser(files_dir)
 
-		image_file_extensions = ["jpg", "jpeg", "png", "bmp", "gif"]
+		image_file_extensions = ["jpg", "jpeg", "png", "bmp", "gif", "tiff"]
 		files = []
 
 		for ext in image_file_extensions:
-			files.extend(glob(global_dir_path + "*." + ext))
+			files.extend(glob(global_dir_path + "/*." + ext))
 
 		for imagePath in files:
 			filename = imagePath[imagePath.rfind("/") + 1:]
