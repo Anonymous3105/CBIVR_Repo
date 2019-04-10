@@ -1,5 +1,34 @@
 import numpy as np
 import cv2
+from matplotlib import pyplot as plt
+
+
+def get_fourier_features(image):
+	"""
+	Function to plot edges detected by using Fast Fourier Transform
+	:param image:
+	:return:
+	"""
+	rows, cols = image.shape[:2]
+	crow,ccol = rows // 2, cols // 2
+
+	f = np.fft.fft2(image)
+	fshift = np.fft.fftshift(f)
+	fshift[crow-30:crow+30, ccol-30:ccol+30] = 0
+
+	f_ishift = np.fft.ifftshift(fshift)
+	img_back = np.fft.ifft2(f_ishift)
+	img_back = np.abs(img_back)
+
+	plt.subplot(131)
+	plt.imshow(image, cmap='gray')
+	plt.title('Input Image'), plt.xticks([]), plt.yticks([])
+	plt.subplot(132)
+	plt.imshow(img_back, cmap='gray')
+	plt.title('Image after HPF'), plt.xticks([]), plt.yticks([])
+	plt.subplot(133)
+	plt.imshow(img_back)
+	plt.title('Result in JET'), plt.xticks([]), plt.yticks([])
 
 
 def get_fourier_descriptors(image):
@@ -8,9 +37,14 @@ def get_fourier_descriptors(image):
 		Source image to compute the fourier descriptors on
 	:return: array_like
 	"""
+
+	image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+	(thresh, image_binary) = cv2.threshold(image, 127, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)
+
+
 	contour = []
-	contour, hierarchy = cv2.findContours(
-		image,
+	_, contour, hierarchy = cv2.findContours(
+		image_binary,
 		cv2.RETR_EXTERNAL,
 		cv2.CHAIN_APPROX_NONE,
 		contour)
@@ -35,8 +69,8 @@ def truncate_descriptor(descriptors, degree):
 		Truncated feature array
 	"""
 	descriptors = np.fft.fftshift(descriptors)
-	center_index = len(descriptors) / 2
-	descriptors = descriptors[center_index - degree / 2:center_index + degree / 2]
+	center_index = len(descriptors) // 2
+	descriptors = descriptors[center_index - degree // 2:center_index + degree // 2]
 	descriptors = np.fft.ifftshift(descriptors)
 
 	return descriptors
@@ -64,7 +98,7 @@ def reconstruct_image(descriptors, degree, plot_contours=False):
 		contour_reconstruct -= contour_reconstruct.min()
 
 	# normalization
-	contour_reconstruct *= 800 / contour_reconstruct.max()
+	contour_reconstruct *= 800 // contour_reconstruct.max()
 
 	# type cast to int32
 	contour_reconstruct = contour_reconstruct.astype(np.int32, copy=False)
